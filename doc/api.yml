@@ -1,0 +1,178 @@
+openapi: '3.0.2'
+info:
+  title: Vaika API
+  version: latest
+servers:
+  - url: https://nj6ruxnfui.execute-api.eu-west-3.amazonaws.com/Prod
+paths:
+  /test:
+    get:
+      responses:
+        '200':
+          description: OK
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    UserBase:
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+          example: Don_Dada
+    Whoami:
+      allOf:
+        - $ref: '#/components/schemas/UserBase'
+      properties:
+        bearer:
+          type: string
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserBase'
+      properties:
+        email:
+          type: string
+          example: user@example.com
+    CrupdateUser:
+      allOf:
+        - $ref: '#/components/schemas/User'
+      properties:
+        password:
+          type: string
+    Brand:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example:
+            - 'Mercedes'
+            - 'Mazda'
+    Type:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example:
+            - 'SUV'
+            - 'Classic'
+    MotorType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example:
+            - 'Diesel'
+            - 'Hybrid'
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        car_id:
+          type: string
+    CarBase:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: 'Adventure Van'
+        description:
+          type: string
+        price:
+          type: number
+          example: 30000
+        model:
+          type: string
+          example: 'Sprinter'
+        color:
+          type: string
+          example: 'White'
+        power:
+          type: string
+          example: '188hp'
+        place_number:
+          type: number
+          example: 22
+    Car:
+      allOf:
+        - $ref: '#/components/schemas/CarBase'
+      properties:
+        brand:
+          $ref: '#/components/schemas/Brand'
+        type:
+          $ref: '#/components/schemas/Type'
+        motor_type:
+          $ref: '#/components/schemas/MotorType'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+    CrupdateCar:
+      allOf:
+        - $ref: '#/components/schemas/CarBase'
+      properties:
+        brand_id:
+          type: string
+        type_id:
+          type: string
+        motor_type_id:
+          type: string
+    AppointmentBase:
+      type: object
+      properties:
+        id:
+          type: string
+        last_name:
+          type: string
+          example: Andrianarisoa
+        first_name:
+          type: string
+          example: Hajatiana
+        email:
+          type: string
+          example: user@example.com
+        contact:
+          type: string
+          example: '+261344444444'
+        message:
+          type: string
+          example: Hello ! Wanna grab that car !!!
+        appointment_datetime:
+          type: string
+          format: date-time
+    AppointmentStatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - VALIDATED
+        - REJECTED
+        - ARCHIVED
+    Appointment:
+      allOf:
+        - $ref: '#/components/schemas/AppointmentBase'
+      properties:
+        car:
+          $ref: '#/components/schemas/Car'
+        status:
+          $ref: '#/components/schemas/AppointmentStatusEnum'
+    CrupdateAppointment:
+      allOf:
+        - $ref: '#/components/schemas/AppointmentBase'
+      properties:
+        car_id:
+          type: string
