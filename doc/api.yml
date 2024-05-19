@@ -4,12 +4,86 @@ info:
   version: latest
 servers:
   - url: https://nj6ruxnfui.execute-api.eu-west-3.amazonaws.com/Prod
+
 paths:
-  /test:
+  /ping:
     get:
+      tags:
+        - Health
+      summary: Ping pong Health endpoint
+      operationId: pingPong
       responses:
         '200':
-          description: OK
+          description: pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /whoami:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Security
+      summary: Who am I? Tells you who you are.
+      operationId: whoami
+      responses:
+        '200':
+          description: Who you are
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Whoami'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /login:
+    post:
+      tags:
+        - Security
+      summary: Log in to access the dashboard
+      operationId: login
+      requestBody:
+        required: true
+        description: Email & Password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+      responses:
+        '200':
+          description: The JWT token for the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
 
 components:
   securitySchemes:
