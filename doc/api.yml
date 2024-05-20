@@ -1,0 +1,826 @@
+openapi: '3.0.2'
+info:
+  title: Vaika API
+  version: latest
+servers:
+  - url: https://nj6ruxnfui.execute-api.eu-west-3.amazonaws.com/Prod
+
+paths:
+  /ping:
+    get:
+      tags:
+        - Health
+      summary: Ping pong Health endpoint
+      operationId: pingPong
+      responses:
+        '200':
+          description: pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /whoami:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Security
+      summary: Who am I? Tells you who you are.
+      operationId: whoami
+      responses:
+        '200':
+          description: Who you are
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Whoami'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /login:
+    post:
+      tags:
+        - Security
+      summary: Log in to access the dashboard
+      operationId: login
+      requestBody:
+        required: true
+        description: Email & Password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+      responses:
+        '200':
+          description: The JWT token for the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /brands:
+    get:
+      tags:
+        - Brand
+      summary: Get all car brands
+      operationId: getBrands
+      responses:
+        '200':
+          description: List of car brands
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Brand'
+        '400':
+          $ref: '#/components/responses/400'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /brands/{id}/cars:
+    parameters:
+      - name: id
+        description: The identifier of the brand
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - Car
+      summary: Get all cars of a specified brand with cost, type and motor type filters
+      operationId: getCarsByBrands
+      parameters:
+        - name: car-type
+          in: query
+          description: The name of the car type
+          schema:
+            type: string
+        - name: motor-type
+          in: query
+          description: The name of the motor type
+          schema:
+            type: string
+        - name: min-cost
+          in: query
+          description: >
+            The minimum cost to filter cars
+            MUST BE SPECIFIED WITH `max-cost`
+          schema:
+            type: number
+        - name: max-cost
+          in: query
+          description: >
+            The maximum cost to filter cars
+            MUST BE SPECIFIED WITH `min-cost`
+          schema:
+            type: number
+      responses:
+        '200':
+          description: List of filtered (or not) cars
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /cars/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: The identifier of the car
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - Car
+      summary: Get a car by its identifier
+      operationId: getACarById
+      responses:
+        '200':
+          description: The specified car
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Car
+      summary: Delete a car with a given id
+      operationId: deleteACarById
+      responses:
+        '200':
+          description: The deleted car
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /cars:
+    get:
+      tags:
+        - Car
+      summary: Get cars with filters on pinned
+      operationId: getCars
+      parameters:
+        - name: pinned
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: List of filtered (or not) cars
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Car
+      summary: Crupdate cars
+      operationId: crupdateCars
+      requestBody:
+        required: true
+        description: >
+          List of cars to crupdate 
+          Update if ID is provided, create otherwise
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CrupdateCar'
+      responses:
+        '200':
+          description: List of the crupdated cars
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /appointments:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointment
+      summary: Get all appointments with filters on status
+      operationId: getAppointments
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/AppointmentStatusEnum'
+      responses:
+        '200':
+          description: The filtered (or not) appointments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Appointment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Appointment
+      summary: make an appointment
+      operationId: makeAppointment
+      requestBody:
+        required: true
+        description: Appointment to make
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrupdateAppointment'
+      responses:
+        '200':
+          description: The created appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          $ref: '#/components/responses/400'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointment
+      summary: Updated an appointment
+      operationId: updateAppointment
+      requestBody:
+        required: true
+        description: Appointment to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrupdateAppointment'
+      responses:
+        '200':
+          description: The updated appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /appointments/{id}:
+    parameters:
+      - name: id
+        description: The identifier of the specified appointment
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointment
+      summary: Get an appointment by its identifier
+      operationId: getAppointmentById
+      responses:
+        '200':
+          description: The specified appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Get all users (admins)
+      operationId: getUsers
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Crupdate users
+      operationId: crupdateUsers
+      requestBody:
+        required: true
+        description: >
+          List of users to crupdate 
+          Update if ID is provided, create otherwise
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CrupdateUser'
+      responses:
+        '200':
+          description: The crupdated users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: The identifier of the user
+        required: true
+        schema:
+          type: string
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Get user by identifier
+      operationId: getUserById
+      responses:
+        '200':
+          description: The specified user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Delete user by identifier
+      operationId: deleteUserById
+      responses:
+        '200':
+          description: The deleted user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /images:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Image
+      summary: Attach new images to a car
+      operationId: attachNewImage
+      requestBody:
+        required: true
+        description: List of images to attach
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateImage'
+      responses:
+        '200':
+          description: The newly attached images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Image'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /images/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: The identifier of the image
+        required: true
+        schema:
+          type: string
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Image
+      summary: Delete image by identifier
+      operationId: deleteImageById
+      responses:
+        '200':
+          description: The deleted image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestException'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotAuthorizedException'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResourceNotFoundException'
+    '429':
+      description: Too many requests to the API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TooManyRequestsException'
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerException'
+
+  schemas:
+    UserBase:
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+          example: Don_Dada
+    Whoami:
+      allOf:
+        - $ref: '#/components/schemas/UserBase'
+      properties:
+        bearer:
+          type: string
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserBase'
+      properties:
+        email:
+          type: string
+          example: user@example.com
+    CrupdateUser:
+      allOf:
+        - $ref: '#/components/schemas/User'
+      properties:
+        password:
+          type: string
+    Brand:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: 'Mercedes'
+    Type:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: 'SUV'
+    MotorType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: 'Hybrid'
+    CreateImage:
+      type: object
+      properties:
+        url:
+          type: string
+        car_id:
+          type: string
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+      allOf:
+        - $ref: '#/components/schemas/CreateImage'
+    CarBase:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: 'Adventure Van'
+        description:
+          type: string
+        price:
+          type: number
+          example: 30000
+        model:
+          type: string
+          example: 'Sprinter'
+        color:
+          type: string
+          example: 'White'
+        power:
+          type: string
+          example: '188hp'
+        place_number:
+          type: number
+          example: 22
+    Car:
+      allOf:
+        - $ref: '#/components/schemas/CarBase'
+      properties:
+        pinned:
+          type: boolean
+          default: false
+        brand:
+          $ref: '#/components/schemas/Brand'
+        type:
+          $ref: '#/components/schemas/Type'
+        motor_type:
+          $ref: '#/components/schemas/MotorType'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+    CrupdateCar:
+      allOf:
+        - $ref: '#/components/schemas/CarBase'
+      properties:
+        brand_id:
+          type: string
+        type_id:
+          type: string
+        motor_type_id:
+          type: string
+    AppointmentBase:
+      type: object
+      properties:
+        id:
+          type: string
+        last_name:
+          type: string
+          example: Andrianarisoa
+        first_name:
+          type: string
+          example: Hajatiana
+        email:
+          type: string
+          example: user@example.com
+        contact:
+          type: string
+          example: '+261344444444'
+        message:
+          type: string
+          example: Hello ! Wanna grab that car !!!
+        appointment_datetime:
+          type: string
+          format: date-time
+    AppointmentStatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - VALIDATED
+        - REJECTED
+        - ARCHIVED
+    Appointment:
+      allOf:
+        - $ref: '#/components/schemas/AppointmentBase'
+      properties:
+        car:
+          $ref: '#/components/schemas/Car'
+        status:
+          $ref: '#/components/schemas/AppointmentStatusEnum'
+    CrupdateAppointment:
+      allOf:
+        - $ref: '#/components/schemas/AppointmentBase'
+      properties:
+        car_id:
+          type: string
+
+    #Exceptions
+
+    Exception:
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    BadRequestException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: BadRequestException
+        message: Bad request
+    NotAuthorizedException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: NotAuthorizedException
+        message: Not authorized
+    ResourceNotFoundException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: ResourceNotFoundException
+        message: Resource of type <T> identified by <I> not found
+    TooManyRequestsException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: TooManyRequestsException
+        message: Too many requests
+    InternalServerException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: InternalServerException
+        message: Unexpected error
