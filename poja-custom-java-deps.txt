@@ -1,0 +1,1 @@
+implementation 'com.vaika:vaika-api-gen:latest'
