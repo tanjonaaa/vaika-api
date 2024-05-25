@@ -53,6 +53,6 @@ jobs:
           echo -e "\n*.ts\nnode_module\n!*.d.ts\n.idea\n.vscode\n.openapi-generator\n.openapi-generator-ignore\ngit_push.sh" >> .npmignore
           npm config set always-auth true
           npm install
-          npm publish
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
