@@ -86,6 +86,9 @@ paths:
           $ref: '#/components/responses/500'
 
   /brands:
+    parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/size'
     get:
       tags:
         - Brand
@@ -115,6 +118,8 @@ paths:
         schema:
           type: string
         required: true
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/size'
     get:
       tags:
         - Car
@@ -217,6 +222,9 @@ paths:
           $ref: '#/components/responses/500'
 
   /cars:
+    parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/size'
     get:
       tags:
         - Car
@@ -294,6 +302,8 @@ paths:
           in: query
           schema:
             $ref: '#/components/schemas/AppointmentStatusEnum'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
       responses:
         '200':
           description: The filtered (or not) appointments
@@ -401,6 +411,9 @@ paths:
 
   /users:
     get:
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
       security:
         - bearerAuth: []
       tags:
@@ -590,6 +603,25 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+
+  parameters:
+    page:
+      name: page
+      description: >
+        Page number for paginated endpoints 
+        Starts from 0
+      in: query
+      schema:
+        type: number
+      required: false
+
+    size:
+      name: size
+      description: Number of elements per pages for paginated endpoints
+      in: query
+      schema:
+        type: number
+      required: false
 
   responses:
     '400':
