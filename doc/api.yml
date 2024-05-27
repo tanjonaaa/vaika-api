@@ -656,23 +656,17 @@ components:
             $ref: '#/components/schemas/InternalServerException'
 
   schemas:
-    UserBase:
+    Whoami:
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+    User:
       properties:
         id:
           type: string
         username:
           type: string
           example: Don_Dada
-    Whoami:
-      allOf:
-        - $ref: '#/components/schemas/UserBase'
-      properties:
-        bearer:
-          type: string
-    User:
-      allOf:
-        - $ref: '#/components/schemas/UserBase'
-      properties:
         email:
           type: string
           example: user@example.com
