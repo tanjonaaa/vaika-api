@@ -1,5 +1,7 @@
 package com.vaika.api.service.security;
 
+import com.vaika.api.model.exception.ForbiddenException;
+import com.vaika.api.model.exception.InternalServerErrorException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -37,7 +39,7 @@ public class JwtService {
           .getPayload()
           .getSubject();
     } catch (JwtException e) {
-      throw new RuntimeException(e);
+      throw new ForbiddenException("Invalid token");
     }
   }
 

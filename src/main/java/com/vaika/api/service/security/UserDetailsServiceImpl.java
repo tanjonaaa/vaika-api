@@ -1,5 +1,6 @@
 package com.vaika.api.service.security;
 
+import com.vaika.api.model.exception.NotFoundException;
 import com.vaika.api.model.security.UserDetailsImpl;
 import com.vaika.api.repository.jpa.UserRepository;
 import com.vaika.api.repository.model.User;
@@ -20,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         repository
             .findByEmail(username)
             .orElseThrow(
-                () -> new RuntimeException("User with username " + username + " not found"));
+                () -> new NotFoundException("User with username " + username + " not found"));
     return new UserDetailsImpl(user.getEmail());
   }
 }
