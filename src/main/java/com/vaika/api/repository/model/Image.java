@@ -15,10 +15,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 public class Image {
-    @Id
-    private String id;
-    private String url;
-    @ManyToOne
-    @JsonBackReference
-    private Car car;
+  @Id private String id;
+  private String url;
+  @ManyToOne @JsonBackReference private Car car;
 }

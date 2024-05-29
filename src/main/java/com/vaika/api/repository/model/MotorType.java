@@ -13,7 +13,6 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 public class MotorType {
-    @Id
-    private String id;
-    private String name;
+  @Id private String id;
+  private String name;
 }

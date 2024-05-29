@@ -5,12 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,23 +17,20 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Car {
-    @Id
-    private String id;
-    private String name;
-    private String description;
-    private double price;
-    private String model;
-    private String color;
-    private String power;
-    private int placeNumber;
-    private boolean pinned;
-    @ManyToOne
-    private CarType type;
-    @ManyToOne
-    private MotorType motorType;
-    @ManyToOne
-    private Brand brand;
-    @OneToMany(mappedBy = "car")
-    @JsonManagedReference
-    private List<Image> images ;
+  @Id private String id;
+  private String name;
+  private String description;
+  private double price;
+  private String model;
+  private String color;
+  private String power;
+  private int placeNumber;
+  private boolean pinned;
+  @ManyToOne private CarType type;
+  @ManyToOne private MotorType motorType;
+  @ManyToOne private Brand brand;
+
+  @OneToMany(mappedBy = "car")
+  @JsonManagedReference
+  private List<Image> images;
 }

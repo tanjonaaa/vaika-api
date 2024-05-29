@@ -13,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class CarType {
-    @Id
-    private String id;
-    private String name;
+  @Id private String id;
+  private String name;
 }
