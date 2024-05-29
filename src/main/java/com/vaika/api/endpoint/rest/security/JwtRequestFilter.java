@@ -1,6 +1,6 @@
 package com.vaika.api.endpoint.rest.security;
 
-import com.vaika.api.model.security.UserDetailsImpl;
+import com.vaika.api.model.security.Principal;
 import com.vaika.api.service.security.JwtService;
 import com.vaika.api.service.security.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
@@ -42,10 +42,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     // set user details on spring security context
-    final UserDetailsImpl userDetails =
-        (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
+    final Principal userDetails =
+        (Principal) userDetailsService.loadUserByUsername(username);
     final UsernamePasswordAuthenticationToken authentication =
-        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        new UsernamePasswordAuthenticationToken(userDetails, token);
     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     SecurityContextHolder.getContext().setAuthentication(authentication);
 

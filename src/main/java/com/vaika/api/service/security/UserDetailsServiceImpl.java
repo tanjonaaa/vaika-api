@@ -1,7 +1,7 @@
 package com.vaika.api.service.security;
 
-import com.vaika.api.model.exception.NotFoundException;
-import com.vaika.api.model.security.UserDetailsImpl;
+import com.vaika.api.model.exception.ForbiddenException;
+import com.vaika.api.model.security.Principal;
 import com.vaika.api.repository.jpa.UserRepository;
 import com.vaika.api.repository.model.User;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         repository
             .findByEmail(username)
             .orElseThrow(
-                () -> new NotFoundException("User with username " + username + " not found"));
-    return new UserDetailsImpl(user.getEmail());
+                () -> new ForbiddenException("User with username " + username + " not found"));
+    return new Principal(user, "");
   }
 }

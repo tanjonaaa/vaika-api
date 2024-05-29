@@ -14,8 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.OPTIONS;
+import static org.springframework.http.HttpMethod.*;
 
 @EnableWebSecurity
 @Configuration
@@ -54,6 +53,8 @@ public class SecurityConf {
                                     .requestMatchers(GET, "/health/event")
                                     .permitAll()
                                     .requestMatchers(GET, "/health/email")
+                                    .permitAll()
+                                    .requestMatchers(POST, "/login")
                                     .permitAll()
                                     .requestMatchers(GET, "/whoami")
                                     .authenticated()

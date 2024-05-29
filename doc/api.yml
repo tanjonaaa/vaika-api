@@ -61,13 +61,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: user@example.com
-                password:
-                  type: string
+              $ref: '#/components/schemas/Credentials'
       responses:
         '200':
           description: The JWT token for the user
@@ -660,6 +654,13 @@ components:
       properties:
         user:
           $ref: '#/components/schemas/User'
+    Credentials:
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
     User:
       properties:
         id:

@@ -1,7 +1,6 @@
 package com.vaika.api.service.security;
 
 import com.vaika.api.model.exception.ForbiddenException;
-import com.vaika.api.model.exception.InternalServerErrorException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -9,7 +8,6 @@ import io.jsonwebtoken.security.Keys;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,9 +19,9 @@ public class JwtService {
   @Value("${jwt.expiration}")
   private long expiration;
 
-  public String generateToken(UserDetails userDetails) {
+  public String generateToken(String email) {
     return Jwts.builder()
-        .subject(userDetails.getUsername())
+        .subject(email)
         .issuedAt(new Date())
         .expiration(new Date((new Date()).getTime() + expiration))
         .signWith(getSigningKey())

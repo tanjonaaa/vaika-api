@@ -1,14 +1,16 @@
 package com.vaika.api.model.security;
 
 import java.util.Collection;
+
+import com.vaika.api.repository.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @AllArgsConstructor
-public class UserDetailsImpl implements UserDetails {
-  private String email;
-
+public class Principal implements UserDetails {
+  private User user;
+  private String bearer;
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return null;
@@ -16,12 +18,12 @@ public class UserDetailsImpl implements UserDetails {
 
   @Override
   public String getPassword() {
-    return null;
+    return bearer;
   }
 
   @Override
   public String getUsername() {
-    return email;
+    return user.getUsername();
   }
 
   @Override
