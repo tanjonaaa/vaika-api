@@ -1,5 +1,6 @@
 package com.vaika.api.service;
 
+import com.vaika.api.repository.jpa.BrandRepository;
 import com.vaika.api.repository.jpa.CarRepository;
 import com.vaika.api.repository.model.Brand;
 import com.vaika.api.repository.model.Car;
@@ -13,10 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 public class CarService {
     private final CarRepository carRepository;
-    public List<Car> findCarsByFilters(Brand brand, String carType, String motorType, BigDecimal minCost, BigDecimal maxCost) {
+    private final BrandRepository brandRepository;
+    public List<Car> findCarsByFilters(String id, String carType, String motorType, BigDecimal minCost, BigDecimal maxCost) {
         if ((minCost!= null && maxCost == null) || (minCost == null && maxCost!= null)) {
             throw new IllegalArgumentException("Both minCost and maxCost must be provided together.");
         }
-        return carRepository.findByFilters(brand.getId(), carType, motorType, minCost, maxCost);
+
+        return carRepository.findByFilters(id, carType, motorType, minCost, maxCost);
     }
 }
