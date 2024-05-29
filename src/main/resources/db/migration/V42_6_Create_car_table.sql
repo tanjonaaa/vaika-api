@@ -5,7 +5,7 @@ create table if not exists "car"
     color varchar          not null,
     description varchar,
     model varchar,
-    name varchar,
+    name varchar not null,
     pinned boolean,
     place_number integer,
     power varchar,
