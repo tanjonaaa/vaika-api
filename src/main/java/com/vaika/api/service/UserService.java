@@ -25,7 +25,7 @@ public class UserService {
     User user =
         repository.findByEmail(email).orElseThrow(() -> new ForbiddenException("Bad credentials"));
 
-    if (!(user.getPassword().equals(passwordEncoder.encode(rawPassword))))
+    if (!(passwordEncoder.matches(rawPassword, user.getPassword())))
       throw new ForbiddenException("Bad credentials");
 
     return jwtService.generateToken(user.getEmail());

@@ -1,16 +1,20 @@
-package com.vaika.api.model.security;
-
-import java.util.Collection;
+package com.vaika.api.endpoint.rest.security.model;
 
 import com.vaika.api.repository.model.User;
+import java.util.Collection;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @AllArgsConstructor
+@Getter
+@Setter
 public class Principal implements UserDetails {
   private User user;
   private String bearer;
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return null;

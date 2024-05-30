@@ -654,6 +654,8 @@ components:
       properties:
         user:
           $ref: '#/components/schemas/User'
+        bearer:
+          type: string
     Credentials:
       properties:
         email:

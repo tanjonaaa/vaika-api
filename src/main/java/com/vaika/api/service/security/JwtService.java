@@ -1,7 +1,5 @@
 package com.vaika.api.service.security;
 
-import com.vaika.api.model.exception.ForbiddenException;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -29,16 +27,12 @@ public class JwtService {
   }
 
   public String validateTokenAndGetUsername(String token) {
-    try {
-      return Jwts.parser()
-          .verifyWith(getSigningKey())
-          .build()
-          .parseSignedClaims(token)
-          .getPayload()
-          .getSubject();
-    } catch (JwtException e) {
-      throw new ForbiddenException("Invalid token");
-    }
+    return Jwts.parser()
+        .verifyWith(getSigningKey())
+        .build()
+        .parseSignedClaims(token)
+        .getPayload()
+        .getSubject();
   }
 
   private SecretKey getSigningKey() {

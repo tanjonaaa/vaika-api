@@ -30,7 +30,8 @@ Globals:
         SPRING_DATASOURCE_URL: !Sub '{{resolve:ssm:/vaika-api/${Env}/db/url}}'
         SPRING_DATASOURCE_USERNAME: !Sub '{{resolve:ssm:/vaika-api/${Env}/db/username}}'
         SPRING_DATASOURCE_PASSWORD: !Sub '{{resolve:ssm:/vaika-api/${Env}/db/password}}'
-        
+        JWT_SECRET: !Sub '{{resolve:ssm:/vaika-api/${Env}/jwt/secret}}'
+        JWT_EXPIRATION: !Sub '{{resolve:ssm:/vaika-api/${Env}/jwt/expiration}}'
         JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dspring.main.lazy-initialization=true -Dspring.data.jpa.repositories.bootstrap-mode=lazy -Dspring.datasource.max-active=5 -Dspring.datasource.max-idle=1 -Dspring.datasource.min-idle=1 -Dspring.datasource.initial-size=1
 
 Parameters:
