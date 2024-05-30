@@ -5,6 +5,7 @@ import com.vaika.api.repository.jpa.CarRepository;
 import com.vaika.api.repository.model.Car;
 import java.math.BigDecimal;
 import java.util.List;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,20 @@ public class CarService {
     }
 
     return carRepository.findByFilters(id, carType, motorType, minCost, maxCost);
+  }
+
+  public Car findCarById(String id) {
+    if (id == null) {
+      throw new IllegalArgumentException("Car ID cannot be null.");
+    }
+    return carRepository.findById(id).orElse(null);
+  }
+
+  public Car deleteCarById(String id) {
+    Car car = carRepository.deleteByIdReturning(id);
+    if (car == null) {
+      throw new EntityNotFoundException("Car with id " + id + " not found");
+    }
+    return car;
   }
 }

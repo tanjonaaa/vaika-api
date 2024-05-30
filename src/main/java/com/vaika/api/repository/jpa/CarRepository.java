@@ -3,6 +3,7 @@ package com.vaika.api.repository.jpa;
 import com.vaika.api.repository.model.Car;
 import java.math.BigDecimal;
 import java.util.List;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +23,8 @@ public interface CarRepository extends JpaRepository<Car, String> {
       @Param("motorType") String motorType,
       @Param("minCost") BigDecimal minCost,
       @Param("maxCost") BigDecimal maxCost);
+
+  @Transactional
+  @Query(value = "DELETE FROM Car WHERE id = :id RETURNING *", nativeQuery = true)
+  Car deleteByIdReturning(@Param("id") String id);
 }
