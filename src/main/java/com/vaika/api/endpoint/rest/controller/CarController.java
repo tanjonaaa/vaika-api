@@ -7,10 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -28,5 +25,15 @@ public class CarController {
     List<com.vaika.api.repository.model.Car> cars =
         service.findCarsByFilters(id, carType, motorType, minCost, maxCost);
     return cars.stream().map(mapper::toRest).collect(Collectors.toList());
+  }
+
+  @GetMapping("/cars/{id}")
+  public Car getCarById(@PathVariable String id) {
+    return mapper.toRest(service.findCarById(id));
+  }
+
+  @DeleteMapping("/cars/{id}")
+  public Car deleteById(@PathVariable String id) {
+    return mapper.toRest(service.deleteCarById(id));
   }
 }
