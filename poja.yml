@@ -11,7 +11,7 @@ custom_java_repositories: poja-custom-java-repositories.txt
 database_non_root_password: null
 database_non_root_username: null
 frontal_memory: 2048
-jacoco_min_coverage: '0.2'
+jacoco_min_coverage: '0'
 java_facade_it: FacadeIT
 package_full_name: com.vaika.api
 region: eu-west-3

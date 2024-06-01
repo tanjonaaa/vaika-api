@@ -61,13 +61,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: user@example.com
-                password:
-                  type: string
+              $ref: '#/components/schemas/Credentials'
       responses:
         '200':
           description: The JWT token for the user
@@ -656,23 +650,26 @@ components:
             $ref: '#/components/schemas/InternalServerException'
 
   schemas:
-    UserBase:
+    Whoami:
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        bearer:
+          type: string
+    Credentials:
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+    User:
       properties:
         id:
           type: string
         username:
           type: string
           example: Don_Dada
-    Whoami:
-      allOf:
-        - $ref: '#/components/schemas/UserBase'
-      properties:
-        bearer:
-          type: string
-    User:
-      allOf:
-        - $ref: '#/components/schemas/UserBase'
-      properties:
         email:
           type: string
           example: user@example.com
