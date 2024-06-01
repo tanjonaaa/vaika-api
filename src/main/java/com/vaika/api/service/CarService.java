@@ -1,11 +1,11 @@
 package com.vaika.api.service;
 
+import com.vaika.api.model.exception.NotFoundException;
 import com.vaika.api.repository.jpa.BrandRepository;
 import com.vaika.api.repository.jpa.CarRepository;
 import com.vaika.api.repository.model.Car;
 import java.math.BigDecimal;
 import java.util.List;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +28,15 @@ public class CarService {
     if (id == null) {
       throw new IllegalArgumentException("Car ID cannot be null.");
     }
-    return carRepository.findById(id).orElse(null);
+    return carRepository
+        .findById(id)
+        .orElseThrow(() -> new NotFoundException("Car with id : " + id + " not found"));
   }
 
   public Car deleteCarById(String id) {
     Car car = carRepository.deleteByIdReturning(id);
     if (car == null) {
-      throw new EntityNotFoundException("Car with id " + id + " not found");
+      throw new NotFoundException("Car with id " + id + " not found");
     }
     return car;
   }
