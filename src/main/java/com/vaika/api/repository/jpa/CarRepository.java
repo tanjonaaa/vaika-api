@@ -1,9 +1,9 @@
 package com.vaika.api.repository.jpa;
 
 import com.vaika.api.repository.model.Car;
+import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
