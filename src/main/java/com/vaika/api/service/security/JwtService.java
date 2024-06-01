@@ -1,27 +1,24 @@
 package com.vaika.api.service.security;
 
+import com.vaika.api.endpoint.rest.security.JwtConf;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.util.Date;
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class JwtService {
-
-  @Value("${jwt.secret}")
-  private String secret;
-
-  @Value("${jwt.expiration}")
-  private long expiration;
+  private final JwtConf jwtConf;
 
   public String generateToken(String email) {
     return Jwts.builder()
         .subject(email)
         .issuedAt(new Date())
-        .expiration(new Date((new Date()).getTime() + expiration))
+        .expiration(new Date((new Date()).getTime() + jwtConf.getExpiration()))
         .signWith(getSigningKey())
         .compact();
   }
@@ -36,7 +33,7 @@ public class JwtService {
   }
 
   private SecretKey getSigningKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(secret);
+    byte[] keyBytes = Decoders.BASE64.decode(jwtConf.getSecret());
     return Keys.hmacShaKeyFor(keyBytes);
   }
 }
