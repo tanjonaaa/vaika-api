@@ -1,12 +1,11 @@
 package com.vaika.api.endpoint.rest.security;
 
-import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.GET;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,15 +35,14 @@ public class SecurityConf {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
-        .cors(Customizer.withDefaults())
+        .cors(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
-            (authorize) -> {
-              authorize
-                  .requestMatchers(GET, "/whoami")
-                  .authenticated()
-                  .requestMatchers("/**")
-                  .permitAll();
-            })
+            (authorize) ->
+                authorize
+                    .requestMatchers("/**")
+                    .permitAll()
+                    .requestMatchers(GET, "/whoami")
+                    .authenticated())
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
