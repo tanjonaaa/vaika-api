@@ -1,6 +1,5 @@
 package com.vaika.api.endpoint.rest.security;
 
-import static org.springframework.http.HttpMethod.OPTIONS;
 import static org.springframework.http.HttpMethod.GET;
 
 import lombok.AllArgsConstructor;
