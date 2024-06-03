@@ -2,6 +2,7 @@ package com.vaika.api.endpoint.rest.controller;
 
 import com.vaika.api.endpoint.rest.mapper.UserMapper;
 import com.vaika.api.endpoint.rest.model.Credentials;
+import com.vaika.api.endpoint.rest.model.LoginResponse;
 import com.vaika.api.endpoint.rest.model.Whoami;
 import com.vaika.api.endpoint.rest.security.model.Principal;
 import com.vaika.api.service.UserService;
@@ -19,8 +20,8 @@ public class SecurityController {
   private final UserMapper userMapper;
 
   @PostMapping("/login")
-  public String authenticateAndGetToken(@RequestBody Credentials credentials) {
-    return userService.authenticateAndGetToken(credentials);
+  public LoginResponse authenticateAndGetToken(@RequestBody Credentials credentials) {
+    return new LoginResponse().token(userService.authenticateAndGetToken(credentials));
   }
 
   @GetMapping("/whoami")

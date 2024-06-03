@@ -68,10 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
+                $ref: '#/components/schemas/LoginResponse'
         '400':
           $ref: '#/components/responses/400'
         '429':
@@ -650,6 +647,10 @@ components:
             $ref: '#/components/schemas/InternalServerException'
 
   schemas:
+    LoginResponse:
+      properties:
+        token:
+          type: string
     Whoami:
       properties:
         user:
