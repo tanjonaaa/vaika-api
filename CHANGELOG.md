@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/tanjonaaa/vaika-api/compare/v1.1.0...v1.3.0) (2024-06-03)
+
+
+### Bug Fixes
+
+* migration files not named correctly ([bdadb0d](https://github.com/tanjonaaa/vaika-api/commit/bdadb0d99aa34c4f3b65e4293a1257374bde626d))
+
+
+### Features
+
+* Car::findCarById,deleteCarById ([9ed14aa](https://github.com/tanjonaaa/vaika-api/commit/9ed14aa278d18ff4a6c7d135ccc8ef50ad01312e))
+
+
+
 # [1.1.0](https://github.com/tanjonaaa/vaika-api/compare/v0.2.0...v1.1.0) (2024-06-01)
 
 
