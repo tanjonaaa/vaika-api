@@ -667,7 +667,7 @@ components:
         name:
           type: string
           example: 'Mercedes'
-        logoUrl:
+        logo_url:
           type: string
           example: 'https://example.com/logo.png'
     Type:

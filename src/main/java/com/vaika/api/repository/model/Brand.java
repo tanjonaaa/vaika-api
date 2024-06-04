@@ -12,6 +12,7 @@ import lombok.Setter;
 public class Brand {
   @Id private String id;
   private String name;
+
   @Column(name = "logo_url")
   private String logoUrl;
 }
