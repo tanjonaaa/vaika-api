@@ -667,6 +667,9 @@ components:
         name:
           type: string
           example: 'Mercedes'
+        logoUrl:
+          type: string
+          example: 'https://example.com/logo.png'
     Type:
       type: object
       properties:
