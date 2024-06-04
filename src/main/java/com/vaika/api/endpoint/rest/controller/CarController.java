@@ -2,11 +2,14 @@ package com.vaika.api.endpoint.rest.controller;
 
 import com.vaika.api.endpoint.rest.mapper.CarMapper;
 import com.vaika.api.endpoint.rest.model.Car;
+import com.vaika.api.endpoint.rest.model.CrupdateCar;
 import com.vaika.api.service.CarService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class CarController {
   private final CarService service;
   private final CarMapper mapper;
+  private final CarService carService;
 
   @GetMapping("/brands/{id}/cars")
   public List<Car> getCarsByBrand(
@@ -35,5 +39,18 @@ public class CarController {
   @DeleteMapping("/cars/{id}")
   public Car deleteById(@PathVariable String id) {
     return mapper.toRest(service.deleteCarById(id));
+  }
+
+  @GetMapping("/cars")
+  public List<Car> getCars(@RequestParam(required = false) Boolean pinned,
+                           @RequestParam(required = false,defaultValue = "0") Integer page,
+                           @RequestParam(required = false,defaultValue = "10") Integer size) {
+    Page<com.vaika.api.repository.model.Car> cars = service.findAllCars(pinned, PageRequest.of(page, size));
+    return cars.stream().map(mapper::toRest).collect(Collectors.toList());
+  }
+
+  @PutMapping("/cars")
+  public List<Car> createOrUpdateCars(@RequestBody List<CrupdateCar> cars) {
+    return carService.createOrUpdateCars(cars).stream().map(mapper::toRest).toList();
   }
 }
