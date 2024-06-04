@@ -1,3 +1,12 @@
+do
+$$
+    begin
+        if not exists(select from pg_type where typname = 'appointment_status_enum') then
+            create type appointment_status_enum as enum ('PENDING', 'VALIDATED', 'REJECTED', 'ARCHIVED');
+        end if;
+    end
+$$;
+
   create table if not exists "appointment"
   (
       id   varchar
@@ -8,6 +17,6 @@
       contact varchar not null,
       message varchar not null,
       appointment_datetime timestamp with time zone,
-      status "appointment_status_enum",
+      status appointment_status_enum not null default 'PENDING',
       car_id varchar references car(id)
   );

@@ -1,7 +1,7 @@
 package com.vaika.api.repository.jpa;
 
 import com.vaika.api.repository.model.Appointment;
-import com.vaika.api.repository.model.Enum.AppointmentStatusEnum;
+import com.vaika.api.repository.model.enums.AppointmentStatusEnum;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,18 +1,16 @@
 package com.vaika.api.repository.model;
 
-import com.vaika.api.repository.model.Enum.AppointmentStatusEnum;
+import com.vaika.api.repository.model.enums.AppointmentStatusEnum;
 import jakarta.persistence.*;
 import java.time.Instant;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Appointment {
   @Id private String id;
   private String lastName;

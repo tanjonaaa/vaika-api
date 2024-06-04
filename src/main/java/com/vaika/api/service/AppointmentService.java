@@ -1,11 +1,10 @@
 package com.vaika.api.service;
 
-import com.vaika.api.model.exception.NotFoundException;
+import com.vaika.api.endpoint.rest.mapper.AppointmentMapper;
+import com.vaika.api.endpoint.rest.model.CrupdateAppointment;
 import com.vaika.api.repository.jpa.AppointmentRepository;
-import com.vaika.api.repository.jpa.CarRepository;
 import com.vaika.api.repository.model.Appointment;
-import com.vaika.api.repository.model.Enum.AppointmentStatusEnum;
-import com.vaika.api.repository.model.dao.AppointmentDao;
+import com.vaika.api.repository.model.enums.AppointmentStatusEnum;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AppointmentService {
   private final AppointmentRepository appointmentRepository;
-  private final CarRepository carRepository;
+  private final AppointmentMapper mapper;
 
   public Page<Appointment> findAppointmentsByStatus(
       AppointmentStatusEnum status, int pageNumber, int pageSize) {
@@ -32,43 +31,11 @@ public class AppointmentService {
     return appointmentRepository.findByAppId(id);
   }
 
-  public Appointment save(AppointmentDao toSave) {
-    Appointment appointment = new Appointment();
-    appointment.setId(toSave.getId());
-    appointment.setLastName(toSave.getLastname());
-    appointment.setFirstName(toSave.getFirstName());
-    appointment.setContact(toSave.getContact());
-    appointment.setMessage(toSave.getMessage());
-    appointment.setAppointmentDateTime(toSave.getAppointmentDateTime());
-    appointment.setStatus(AppointmentStatusEnum.PENDING);
-    appointment.setCar(
-        carRepository
-            .findById(toSave.getIdCar())
-            .orElseThrow(
-                () -> new NotFoundException("Car with id : " + toSave.getIdCar() + " not found")));
-    return appointmentRepository.save(appointment);
+  public List<Appointment> save(List<CrupdateAppointment> toSave) {
+    return this.appointmentRepository.saveAll(createAppointmentsFrom(toSave));
   }
 
-  public Appointment update(AppointmentDao toUpdate) {
-    Appointment appointment =
-        appointmentRepository
-            .findById(toUpdate.getId())
-            .orElseThrow(() -> new RuntimeException("Appointment not found"));
-    appointment.setId(toUpdate.getId());
-    appointment.setLastName(toUpdate.getLastname());
-    appointment.setFirstName(toUpdate.getFirstName());
-    appointment.setEmail(toUpdate.getEmail());
-    appointment.setContact(toUpdate.getContact());
-    appointment.setMessage(toUpdate.getMessage());
-    appointment.setAppointmentDateTime(toUpdate.getAppointmentDateTime());
-    appointment.setCar(
-        carRepository
-            .findById(toUpdate.getIdCar())
-            .orElseThrow(
-                () ->
-                    new NotFoundException("Car with id : " + toUpdate.getIdCar() + " not found")));
-    appointment.setStatus(AppointmentStatusEnum.PENDING);
-
-    return appointmentRepository.save(appointment);
+  private List<Appointment> createAppointmentsFrom(List<CrupdateAppointment> crupdateAppointments) {
+    return crupdateAppointments.stream().map(mapper::toDomain).toList();
   }
 }

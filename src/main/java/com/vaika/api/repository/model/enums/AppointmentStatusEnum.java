@@ -1,4 +1,4 @@
-package com.vaika.api.repository.model.Enum;
+package com.vaika.api.repository.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
