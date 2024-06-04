@@ -1,5 +1,6 @@
 package com.vaika.api.repository.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -11,4 +12,7 @@ import lombok.Setter;
 public class Brand {
   @Id private String id;
   private String name;
+
+  @Column(name = "logo_url")
+  private String logoUrl;
 }
