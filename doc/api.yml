@@ -312,52 +312,31 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-    post:
-      tags:
-        - Appointment
-      summary: make an appointment
-      operationId: makeAppointment
-      requestBody:
-        required: true
-        description: Appointment to make
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CrupdateAppointment'
-      responses:
-        '200':
-          description: The created appointment
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Appointment'
-        '400':
-          $ref: '#/components/responses/400'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
     put:
       security:
         - bearerAuth: []
       tags:
         - Appointment
-      summary: Updated an appointment
-      operationId: updateAppointment
+      summary: Crupdate an appointment
+      operationId: crupdateAppointment
       requestBody:
         required: true
-        description: Appointment to update
+        description: List of appointments to crupdate
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CrupdateAppointment'
+              type: array
+              items:
+                $ref: '#/components/schemas/CrupdateAppointment'
       responses:
         '200':
-          description: The updated appointment
+          description: The crupdated appointments
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Appointment'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Appointment'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -793,6 +772,8 @@ components:
         appointment_datetime:
           type: string
           format: date-time
+        status:
+          $ref: '#/components/schemas/AppointmentStatusEnum'
     AppointmentStatusEnum:
       type: string
       enum:
@@ -806,8 +787,6 @@ components:
       properties:
         car:
           $ref: '#/components/schemas/Car'
-        status:
-          $ref: '#/components/schemas/AppointmentStatusEnum'
     CrupdateAppointment:
       allOf:
         - $ref: '#/components/schemas/AppointmentBase'
