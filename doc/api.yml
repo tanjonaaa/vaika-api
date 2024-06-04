@@ -667,6 +667,9 @@ components:
         name:
           type: string
           example: 'Mercedes'
+        logo_url:
+          type: string
+          example: 'https://www.india.com/viral/viral-news-mia-khalifa-dead-former-adult-star-busts-death-hoax-facebook-page-turns-into-a-memorial-tweet-5216872/'
     Type:
       type: object
       properties:
