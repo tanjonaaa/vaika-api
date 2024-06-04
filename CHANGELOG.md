@@ -1,3 +1,13 @@
+# [1.5.0](https://github.com/tanjonaaa/vaika-api/compare/v1.4.0...v1.5.0) (2024-06-04)
+
+
+### Features
+
+* add logo_url property to brands ([43841dc](https://github.com/tanjonaaa/vaika-api/commit/43841dcec865e5589decf2dec4f46c423323bd20))
+* can get, save and delete users ([8271b2c](https://github.com/tanjonaaa/vaika-api/commit/8271b2c116dfa54007f3d6266f74cadde8adb70f))
+
+
+
 # [1.4.0](https://github.com/tanjonaaa/vaika-api/compare/v1.3.0...v1.4.0) (2024-06-04)
 
 
