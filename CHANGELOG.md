@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/tanjonaaa/vaika-api/compare/v1.3.0...v1.4.0) (2024-06-04)
+
+
+### Features
+
+* can make and get appointments at /appointments ([fd6dc7e](https://github.com/tanjonaaa/vaika-api/commit/fd6dc7e6872102bbfa54bcd460ef366e1d2d47ff))
+
+
+
 # [1.3.0](https://github.com/tanjonaaa/vaika-api/compare/v1.1.0...v1.3.0) (2024-06-03)
 
 
