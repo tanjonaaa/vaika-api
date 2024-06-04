@@ -8,6 +8,6 @@
       contact varchar not null,
       message varchar not null,
       appointment_datetime timestamp with time zone,
-      status "appointment_status_enum" default 'PENDING',
+      status "appointment_status_enum",
       car_id varchar references car(id)
   );
