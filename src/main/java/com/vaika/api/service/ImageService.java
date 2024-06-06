@@ -13,17 +13,18 @@ import org.springframework.stereotype.Service;
 public class ImageService {
   private final ImageMapper mapper;
   private final ImageRepository imageRepository;
+
   public List<Image> attachImageWithCar(List<com.vaika.api.endpoint.rest.model.Image> images) {
-    return imageRepository.saveAll(attachImageWithCarFrom(images));
+    return imageRepository.saveAll(createImagesFrom(images));
   }
 
-  private List<Image> attachImageWithCarFrom(List<com.vaika.api.endpoint.rest.model.Image> image) {
+  private List<Image> createImagesFrom(List<com.vaika.api.endpoint.rest.model.Image> image) {
     return image.stream().map(mapper::toDomain).toList();
   }
 
-  public Image deleteImage(String id){
+  public Image deleteImage(String id) {
     Image image = imageRepository.deleteByIdReturning(id);
-    if (image == null){
+    if (image == null) {
       throw new NotFoundException("Image with id " + id + " not found");
     }
     return image;
