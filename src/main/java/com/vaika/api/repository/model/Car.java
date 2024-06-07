@@ -1,10 +1,9 @@
 package com.vaika.api.repository.model;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +16,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class Car {
-  @Id private String id;
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  private String id;
+
   private String name;
   private String description;
   private double price;
