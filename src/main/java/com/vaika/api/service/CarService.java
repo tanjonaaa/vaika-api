@@ -25,6 +25,10 @@ public class CarService {
     return carRepository.findByFilters(id, carType, motorType, minCost, maxCost);
   }
 
+  public List<Car> findByPins(boolean pinned) {
+    return carRepository.findByPin(pinned);
+  }
+
   public List<Car> save(List<CrupdateCar> toSave) {
     return carRepository.saveAll(createCarsFrom(toSave));
   }

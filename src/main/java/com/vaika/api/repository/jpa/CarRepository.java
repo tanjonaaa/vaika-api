@@ -24,6 +24,9 @@ public interface CarRepository extends JpaRepository<Car, String> {
       @Param("minCost") BigDecimal minCost,
       @Param("maxCost") BigDecimal maxCost);
 
+  @Query("SELECT c FROM Car c WHERE (:pinned IS NULL OR c.pinned = :pinned)")
+  List<Car> findByPin(@Param("pinned") boolean pinned);
+
   @Transactional
   @Query(value = "DELETE FROM Car WHERE id = :id RETURNING *", nativeQuery = true)
   Car deleteByIdReturning(@Param("id") String id);
