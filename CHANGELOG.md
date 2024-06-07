@@ -1,3 +1,18 @@
+# [1.6.0](https://github.com/tanjonaaa/vaika-api/compare/v1.5.0...v1.6.0) (2024-06-07)
+
+
+### Bug Fixes
+
+* IDs are not generated on creation ([644da3e](https://github.com/tanjonaaa/vaika-api/commit/644da3e154a2cfd66d609b1d2bcc4566cd55355d))
+
+
+### Features
+
+* crupdate cars ([f519430](https://github.com/tanjonaaa/vaika-api/commit/f51943094f707cedb3fdfa15546546275b276054))
+* image::AttachImageToACar,deleteImageByIdentifier ([9e71323](https://github.com/tanjonaaa/vaika-api/commit/9e71323487aa8233626ceabaf704d522e626b417))
+
+
+
 # [1.5.0](https://github.com/tanjonaaa/vaika-api/compare/v1.4.0...v1.5.0) (2024-06-04)
 
 
