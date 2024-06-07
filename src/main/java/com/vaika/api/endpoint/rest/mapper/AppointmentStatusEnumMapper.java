@@ -7,21 +7,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AppointmentStatusEnumMapper {
-    public Appointment.StatusEnum toRest(AppointmentStatusEnum domain) {
-        return switch (domain) {
-            case PENDING -> Appointment.StatusEnum.PENDING;
-            case VALIDATED -> Appointment.StatusEnum.VALIDATED;
-            case REJECTED -> Appointment.StatusEnum.REJECTED;
-            case ARCHIVED -> Appointment.StatusEnum.ARCHIVED;
-        };
-    }
+  public Appointment.StatusEnum toRest(AppointmentStatusEnum domain) {
+    return switch (domain) {
+      case PENDING -> Appointment.StatusEnum.PENDING;
+      case VALIDATED -> Appointment.StatusEnum.VALIDATED;
+      case REJECTED -> Appointment.StatusEnum.REJECTED;
+      case ARCHIVED -> Appointment.StatusEnum.ARCHIVED;
+    };
+  }
 
-    public AppointmentStatusEnum toDomain(CrupdateAppointment.StatusEnum rest){
-        return switch (rest) {
-            case PENDING -> AppointmentStatusEnum.PENDING;
-            case VALIDATED -> AppointmentStatusEnum.VALIDATED;
-            case REJECTED -> AppointmentStatusEnum.REJECTED;
-            case ARCHIVED -> AppointmentStatusEnum.ARCHIVED;
-        };
-    }
+  public AppointmentStatusEnum toDomain(CrupdateAppointment.StatusEnum rest) {
+    return switch (rest) {
+      case PENDING -> AppointmentStatusEnum.PENDING;
+      case VALIDATED -> AppointmentStatusEnum.VALIDATED;
+      case REJECTED -> AppointmentStatusEnum.REJECTED;
+      case ARCHIVED -> AppointmentStatusEnum.ARCHIVED;
+    };
+  }
 }
