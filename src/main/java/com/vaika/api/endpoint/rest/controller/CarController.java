@@ -28,6 +28,11 @@ public class CarController {
     return cars.stream().map(mapper::toRest).collect(Collectors.toList());
   }
 
+  @GetMapping("/cars")
+  public List<Car> getCars(@RequestParam(required = false) boolean pinned) {
+    return service.findByPins(pinned).stream().map(mapper::toRest).toList();
+  }
+
   @PutMapping("/cars")
   public List<Car> crupdateCars(@RequestBody List<CrupdateCar> toSave) {
     return service.save(toSave).stream().map(mapper::toRest).toList();
