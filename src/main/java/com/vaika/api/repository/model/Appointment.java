@@ -6,6 +6,7 @@ import com.vaika.api.repository.model.enums.AppointmentStatusEnum;
 import jakarta.persistence.*;
 import java.time.Instant;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class Appointment {
   private String email;
   private String contact;
   private String message;
-  private Instant appointmentDateTime;
+  private Instant appointmentDatetime;
   @ManyToOne private Car car;
 
   @Enumerated(EnumType.STRING)

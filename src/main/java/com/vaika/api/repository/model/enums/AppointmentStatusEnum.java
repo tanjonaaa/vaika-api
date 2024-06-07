@@ -6,10 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum AppointmentStatusEnum {
-  PENDING("PENDING"),
-  VALIDATED("VALIDATED"),
-  REJECTED("REJECTED"),
-  ARCHIVED("ARCHIVED");
-
-  AppointmentStatusEnum(String value) {}
+  PENDING,
+  VALIDATED,
+  REJECTED,
+  ARCHIVED
 }

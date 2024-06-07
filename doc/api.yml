@@ -292,7 +292,12 @@ paths:
         - name: status
           in: query
           schema:
-            $ref: '#/components/schemas/AppointmentStatusEnum'
+            type: string
+            enum:
+              - PENDING
+              - VALIDATED
+              - REJECTED
+              - ARCHIVED
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/size'
       responses:
@@ -776,14 +781,12 @@ components:
           type: string
           format: date-time
         status:
-          $ref: '#/components/schemas/AppointmentStatusEnum'
-    AppointmentStatusEnum:
-      type: string
-      enum:
-        - PENDING
-        - VALIDATED
-        - REJECTED
-        - ARCHIVED
+          type: string
+          enum:
+            - PENDING
+            - VALIDATED
+            - REJECTED
+            - ARCHIVED
     Appointment:
       allOf:
         - $ref: '#/components/schemas/AppointmentBase'

@@ -1,0 +1,1 @@
+CREATE CAST ( varchar AS appointment_status_enum ) WITH INOUT AS IMPLICIT;
