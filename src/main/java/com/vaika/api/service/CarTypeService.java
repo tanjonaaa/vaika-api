@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CarTypeService {
-  private final CarTypeRepository repository;
+    private final CarTypeRepository repository;
 
-  public Page<CarType> findAllCarType(Pageable pageable) {
-    return repository.findAll(pageable);
-  }
+    public Page<CarType> findAllCarType(Pageable pageable){
+        return repository.findAll(pageable);
+    }
 }
