@@ -30,4 +30,7 @@ public interface CarRepository extends JpaRepository<Car, String> {
   @Transactional
   @Query(value = "DELETE FROM Car WHERE id = :id RETURNING *", nativeQuery = true)
   Car deleteByIdReturning(@Param("id") String id);
+
+  @Query(value = "DELETE CASCADE FROM Car WHERE id = :id RETURNING *", nativeQuery = true)
+  Car deleteByIdCascade(@Param("id") String id);
 }

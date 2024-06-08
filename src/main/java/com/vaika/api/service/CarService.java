@@ -53,4 +53,12 @@ public class CarService {
   private List<Car> createCarsFrom(List<CrupdateCar> crupdateCars) {
     return crupdateCars.stream().map(domainMapper::toDomain).toList();
   }
+
+  public Car deleteCascadeCar(String id) {
+    Car car = carRepository.deleteByIdCascade(id);
+    if (car == null) {
+      throw new NotFoundException("Car with id " + id + " not found");
+    }
+    return car;
+  }
 }
