@@ -1,3 +1,19 @@
+# [1.7.0](https://github.com/tanjonaaa/vaika-api/compare/v1.6.0...v1.7.0) (2024-06-08)
+
+
+### Bug Fixes
+
+* appointment_status_enum -> varchar ([65b866a](https://github.com/tanjonaaa/vaika-api/commit/65b866ad44f1192dee138ff53e6141960da71f32))
+* appointmentDateTime -> appointmentDatetime in model ([1981343](https://github.com/tanjonaaa/vaika-api/commit/198134307e21c2dc8e9fb0ac29797fde19690d04))
+
+
+### Features
+
+* CarType,MotorType::findAll ([a954ab3](https://github.com/tanjonaaa/vaika-api/commit/a954ab35e5c6ba48385e77bc502b7896a53ce234))
+* get cars with pin filter ([53f2644](https://github.com/tanjonaaa/vaika-api/commit/53f26449477b861c815716c3d7fd0e3e67683147))
+
+
+
 # [1.6.0](https://github.com/tanjonaaa/vaika-api/compare/v1.5.0...v1.6.0) (2024-06-07)
 
 
