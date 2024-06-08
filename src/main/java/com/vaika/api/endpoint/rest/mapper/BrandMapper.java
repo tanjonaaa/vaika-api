@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 public class BrandMapper {
 
   public Brand toRest(com.vaika.api.repository.model.Brand brand) {
-    return new Brand().id(brand.getId()).name(brand.getName());
+    return new Brand().id(brand.getId()).name(brand.getName()).logoUrl(brand.getLogoUrl());
   }
 }
