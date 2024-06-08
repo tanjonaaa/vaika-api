@@ -768,6 +768,9 @@ components:
       properties:
         id:
           type: string
+        pinned:
+          type: boolean
+          default: false
         name:
           type: string
           example: 'Adventure Van'
@@ -792,9 +795,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/CarBase'
       properties:
-        pinned:
-          type: boolean
-          default: false
         brand:
           $ref: '#/components/schemas/Brand'
         type:
