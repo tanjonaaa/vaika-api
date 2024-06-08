@@ -573,6 +573,64 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
+  /motor-types:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - MotorType
+      summary: Get all Motor type
+      operationId: getAllMotorTypePaginate
+      responses:
+        '200':
+          description: List of MotorType
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MotorType'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /car-types:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - CarType
+      summary: Get all Car type
+      operationId: getAllCarTypePaginate
+      responses:
+        '200':
+          description: List of CarType
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Type'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
 components:
   securitySchemes:
     bearerAuth:

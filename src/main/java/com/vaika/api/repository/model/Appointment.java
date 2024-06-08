@@ -6,7 +6,6 @@ import com.vaika.api.repository.model.enums.AppointmentStatusEnum;
 import jakarta.persistence.*;
 import java.time.Instant;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
