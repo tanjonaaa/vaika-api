@@ -573,7 +573,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /motor-type:
+  /motor-types:
     get:
       parameters:
         - $ref: '#/components/parameters/page'
@@ -602,7 +602,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /car-type:
+  /car-types:
     get:
       parameters:
         - $ref: '#/components/parameters/page'
