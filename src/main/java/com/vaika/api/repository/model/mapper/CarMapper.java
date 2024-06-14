@@ -28,6 +28,7 @@ public class CarMapper {
         .placeNumber(requireNonNull(crupdateCar.getPlaceNumber()).intValue())
         .color(crupdateCar.getColor())
         .model(crupdateCar.getModel())
+        .pinned(crupdateCar.getPinned())
         .brand(
             brandRepository
                 .findById(requireNonNull(crupdateCar.getBrandId()))
