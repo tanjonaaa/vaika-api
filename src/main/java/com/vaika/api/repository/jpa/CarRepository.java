@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,9 +29,12 @@ public interface CarRepository extends JpaRepository<Car, String> {
   List<Car> findByPin(@Param("pinned") Boolean pinned);
 
   @Transactional
-  @Query(value = "DELETE FROM Car WHERE id = :id RETURNING *", nativeQuery = true)
-  Car deleteByIdReturning(@Param("id") String id);
+  @Modifying
+  @Query(value = "DELETE FROM Image WHERE car_id = :id", nativeQuery = true)
+  void deleteImagesByCarId(@Param("id") String id);
 
-  @Query(value = "DELETE CASCADE FROM Car WHERE id = :id RETURNING *", nativeQuery = true)
-  Car deleteByIdCascade(@Param("id") String id);
+  @Transactional
+  @Modifying
+  @Query(value = "DELETE FROM Car WHERE id = :id", nativeQuery = true)
+  void deleteById(@Param("id") String id);
 }
