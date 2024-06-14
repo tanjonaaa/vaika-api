@@ -29,8 +29,8 @@ public class CarController {
   }
 
   @GetMapping("/cars")
-  public List<Car> getCars(@RequestParam(required = false) boolean pinned) {
-    return service.findByPins(pinned).stream().map(mapper::toRest).toList();
+  public List<Car> getCars(@RequestParam(required = false) Boolean pinned) {
+    return service.getCars(pinned).stream().map(mapper::toRest).toList();
   }
 
   @PutMapping("/cars")
