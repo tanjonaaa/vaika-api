@@ -34,7 +34,7 @@ public class Car {
   @ManyToOne private MotorType motorType;
   @ManyToOne private Brand brand;
 
-  @OneToMany(mappedBy = "car")
+  @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
   @JsonManagedReference
   private List<Image> images;
 }

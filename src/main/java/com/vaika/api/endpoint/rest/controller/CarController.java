@@ -45,6 +45,6 @@ public class CarController {
 
   @DeleteMapping("/cars/{id}")
   public Car deleteCascadeCar(@PathVariable String id) {
-    return mapper.toRest(service.deleteCascadeCar(id));
+    return mapper.toRest(service.deleteCarAndImages(id));
   }
 }

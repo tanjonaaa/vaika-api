@@ -5,8 +5,10 @@ import com.vaika.api.model.exception.NotFoundException;
 import com.vaika.api.repository.jpa.CarRepository;
 import com.vaika.api.repository.model.Car;
 import com.vaika.api.repository.model.mapper.CarMapper;
+import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,23 +45,17 @@ public class CarService {
         .orElseThrow(() -> new NotFoundException("Car with id : " + id + " not found"));
   }
 
-  public Car deleteCarById(String id) {
-    Car car = carRepository.deleteByIdReturning(id);
-    if (car == null) {
-      throw new NotFoundException("Car with id " + id + " not found");
-    }
-    return car;
-  }
-
   private List<Car> createCarsFrom(List<CrupdateCar> crupdateCars) {
     return crupdateCars.stream().map(domainMapper::toDomain).toList();
   }
 
-  public Car deleteCascadeCar(String id) {
-    Car car = carRepository.deleteByIdCascade(id);
-    if (car == null) {
-      throw new NotFoundException("Car with id " + id + " not found");
+  @Transactional
+  public Car deleteCarAndImages(String id) {
+    Optional<Car> car = carRepository.findById(id);
+    if (car.isPresent()) {
+      carRepository.deleteImagesByCarId(id);
+      carRepository.deleteById(id);
     }
-    return car;
+    return car.orElseThrow(() -> new NotFoundException("Car with id : " + id + " not found"));
   }
 }
