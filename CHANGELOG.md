@@ -1,15 +1,18 @@
-# [1.7.0](https://github.com/tanjonaaa/vaika-api/compare/v1.6.0...v1.7.0) (2024-06-08)
+# [1.8.0](https://github.com/tanjonaaa/vaika-api/compare/v1.6.0...v1.8.0) (2024-06-14)
 
 
 ### Bug Fixes
 
 * appointment_status_enum -> varchar ([65b866a](https://github.com/tanjonaaa/vaika-api/commit/65b866ad44f1192dee138ff53e6141960da71f32))
 * appointmentDateTime -> appointmentDatetime in model ([1981343](https://github.com/tanjonaaa/vaika-api/commit/198134307e21c2dc8e9fb0ac29797fde19690d04))
+* brand logo not showing ([9f5216e](https://github.com/tanjonaaa/vaika-api/commit/9f5216ee23b07b12dfd8e39bbd82525f43a60a20))
 
 
 ### Features
 
-* CarType,MotorType::findAll ([a954ab3](https://github.com/tanjonaaa/vaika-api/commit/a954ab35e5c6ba48385e77bc502b7896a53ce234))
+* Car::deleteByIdCascade ([e28e0bf](https://github.com/tanjonaaa/vaika-api/commit/e28e0bf769472fa2545fc1e5bf9c085d69f8c43b))
+* CarType,MotorType::findAll ([f352b44](https://github.com/tanjonaaa/vaika-api/commit/f352b442953f32b932aab19693075f6e178bdf97))
+* CarType,MotorType::findAll ([7f84ce3](https://github.com/tanjonaaa/vaika-api/commit/7f84ce33ef350b3ca3b71f79a4c9f895d10c2ec5))
 * get cars with pin filter ([53f2644](https://github.com/tanjonaaa/vaika-api/commit/53f26449477b861c815716c3d7fd0e3e67683147))
 
 
