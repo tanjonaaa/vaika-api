@@ -16,7 +16,7 @@ public class CarTypeController {
   private final CarTypeService carTypeService;
   private final CarTypeMapper carTypeMapper;
 
-  @GetMapping("/car-type")
+  @GetMapping("/car-types")
   public List<Type> getAllCarTypePaginate(
       @RequestParam(required = false, defaultValue = "0") int page,
       @RequestParam(required = false, defaultValue = "6") int size) {
