@@ -17,7 +17,7 @@ public class MotorTypeController {
   private final MotorTypeService motorTypeService;
   private final MotorTypeMapper motorTypeMapper;
 
-  @GetMapping("/motor-type")
+  @GetMapping("/motor-types")
   public List<MotorType> getAllMotorTypePaginate(
       @RequestParam(required = false, defaultValue = "0") int page,
       @RequestParam(required = false, defaultValue = "6") int size) {
